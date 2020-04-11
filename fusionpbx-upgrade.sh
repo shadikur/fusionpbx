@@ -33,6 +33,16 @@ sed -i /etc/nginx/sites-available/fusionpbx -e 's#unix:.*;#unix:/var/run/php/php
 #restart nginx
 service nginx restart
 echo "PHP version has been upgraded \n" 
+echo "Setting permission for Freeswitch \n"
+chown -R www-data:www-data /etc/freeswitch
+chown -R www-data:www-data /var/lib/freeswitch
+chown -R www-data:www-data /usr/share/freeswitch
+chown -R www-data:www-data /var/log/freeswitch
+chown -R www-data:www-data /var/run/freeswitch
+chown -R www-data:www-data /var/cache/fusionpbx
+echo "Restarting Freeswitch \n"
+service freeswitch restart
+echo "Switch process complete \n\n"
 
 echo "Backing up old FusionPBX. \n"
 mv /var/www/fusionpbx /var/www/fusionpbx-old
