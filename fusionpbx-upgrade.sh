@@ -29,6 +29,9 @@ apt-get install -y php7.3 php7.3-cli php7.3-fpm php7.3-pgsql php7.3-sqlite3 php7
 
 #update the unix socket name
 sed -i /etc/nginx/sites-available/fusionpbx -e 's#unix:.*;#unix:/var/run/php/php7.3-fpm.sock;#g'
+rm -rf /etc/nginx/sites-enabled/fusionpbx
+cp /etc/nginx/sites-available/fusionpbx /etc/nginx/sites-enabled/
+
 
 #restart nginx
 service nginx restart
