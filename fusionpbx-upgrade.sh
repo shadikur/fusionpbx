@@ -35,7 +35,7 @@ service nginx restart
 echo "PHP version has been upgraded \n" 
 
 echo "Backing up old FusionPBX. \n"
-mv /var/www/fusionpbx /var/www/fusionpbx-4.4
+mv /var/www/fusionpbx /var/www/fusionpbx-old
 echo "Getting latest FusionPBX. \n"
 cd /var/www && git clone https://github.com/fusionpbx/fusionpbx.git
 echo "Changing permission settings. \n"
