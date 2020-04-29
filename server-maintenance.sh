@@ -19,3 +19,5 @@ echo "${bold}${green}Cleaning Temporary Files...${normal}"
 rm -rf /tmp/*
 apt autoclean -y
 apt autoremove -y
+rm -rf /var/backups/dpkg.diversions.*.gz
+rm -rf /var/backups/dpkg.stat*.*.gz
