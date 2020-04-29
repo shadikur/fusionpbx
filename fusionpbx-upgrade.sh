@@ -4,6 +4,8 @@
 # Copyright (c) shadikur.com
 # Script follows here:
 
+random=$(dd if=/dev/urandom bs=1 count=20 2>/dev/null | base64 | sed 's/[=\+//]//g')
+
 echo "Upgrading PHP Version \n"
 
 #remove php5
@@ -38,6 +40,7 @@ service nginx restart
 echo "PHP version has been upgraded \n" 
 
 echo "Backing up old FusionPBX. \n"
+rm -rf /var/www/fusionpbx-old
 mv /var/www/fusionpbx /var/www/fusionpbx-old
 mkdir -p /var/cache/fusionpbx
 
@@ -95,6 +98,16 @@ chown -R www-data:www-data /usr/share/freeswitch
 chown -R www-data:www-data /var/log/freeswitch
 chown -R www-data:www-data /var/run/freeswitch
 chown -R www-data:www-data /var/cache/fusionpbx
+
+#update xml_cdr url, user and password
+xml_cdr_username=$(dd if=/dev/urandom bs=1 count=20 2>/dev/null | base64 | sed 's/[=\+//]//g')
+xml_cdr_password=$(dd if=/dev/urandom bs=1 count=20 2>/dev/null | base64 | sed 's/[=\+//]//g')
+sed -i /etc/freeswitch/autoload_configs/xml_cdr.conf.xml -e s:"{v_http_protocol}:http:"
+sed -i /etc/freeswitch/autoload_configs/xml_cdr.conf.xml -e s:"{domain_name}:127.0.0.1:"
+sed -i /etc/freeswitch/autoload_configs/xml_cdr.conf.xml -e s:"{v_project_path}::"
+sed -i /etc/freeswitch/autoload_configs/xml_cdr.conf.xml -e s:"{v_user}:$xml_cdr_username:"
+sed -i /etc/freeswitch/autoload_configs/xml_cdr.conf.xml -e s:"{v_pass}:$xml_cdr_password:"
+
 echo "Switch process complete \n\n"
 
 echo "Restarting Freeswitch \n"
