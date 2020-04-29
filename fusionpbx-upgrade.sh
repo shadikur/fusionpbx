@@ -89,6 +89,7 @@ rm -R /usr/share/freeswitch/sounds/temp
 
 
 echo "Setting permission for Freeswitch \n"
+rm -rf /etc/freeswitch.orig
 mv /etc/freeswitch /etc/freeswitch.orig
 mkdir -p /etc/freeswitch
 cp -R /var/www/fusionpbx/resources/templates/conf/* /etc/freeswitch
