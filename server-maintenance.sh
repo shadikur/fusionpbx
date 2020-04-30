@@ -21,3 +21,7 @@ apt autoclean -y
 apt autoremove -y
 rm -rf /var/backups/dpkg.diversions.*.gz
 rm -rf /var/backups/dpkg.stat*.*.gz
+rm -rf /var/log/freeswitch/freeswitch.log
+touch /var/log/freeswitch/freeswitch.log
+chmod g+w /var/log/freeswitch/freeswitch.log
+chown www-data:www-data /var/log/freeswitch/freeswitch.log
