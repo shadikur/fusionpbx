@@ -27,12 +27,13 @@ apt autoremove -y
 rm -rf /var/backups/dpkg.diversions.*.gz
 rm -rf /var/backups/dpkg.stat*.*.gz
 #remove old log
-rm -rf /var/log/freeswitch/freeswitch.log
+rm -rf /var/log/freeswitch/freeswitch.lo*
 #setting permission 
 touch /var/log/freeswitch/freeswitch.log
 chmod g+w /var/log/freeswitch/freeswitch.log
 chown www-data:www-data /var/log/freeswitch/freeswitch.log
-
+echo "${bold}${green}Restarting Freeswitch...${normal}"
+service freeswitch restart
 echo "${bold}${green}FusionPBX old backups deleted...${normal}"
 #delete postgres backups
 find /var/backups/fusionpbx/postgresql/fusionpbx_pgsql* -mtime +4 -exec rm {} \;
