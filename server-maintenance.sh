@@ -12,13 +12,13 @@ now=$(date +%Y-%m-%d)
 
 echo "Maintenance Start time: "
 date
-
+echo "\n"
 echo "${bold}${green}Checking Free Space...${normal}"
 df -h
-
+echo "\n"
 echo "${bold}${green}Checking Free Available RAM...${normal}"
 free -m
-
+echo "\n"
 echo "${bold}${green}Cleaning Temporary Files...${normal}"
 rm -rf /tmp/*
 apt autoclean -y
@@ -38,5 +38,5 @@ echo "${bold}${green}FusionPBX old backups deleted...${normal}"
 find /var/backups/fusionpbx/postgresql/fusionpbx_pgsql* -mtime +4 -exec rm {} \;
 #delete the main backup
 find /var/backups/fusionpbx/*.tgz -mtime +2 -exec rm {} \;
-
+echo "\n"
 echo "${bold}${green}Server maintainace completed!${normal}"
