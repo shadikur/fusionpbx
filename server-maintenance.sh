@@ -9,6 +9,7 @@ bold=$(tput bold)
 normal=$(tput sgr0)
 green=$(tput setaf 2)
 now=$(date +%Y-%m-%d)
+rm -rf /opt/maintenance_report.txt
 
 echo "Maintenance Start time: "
 date
@@ -23,7 +24,6 @@ echo "${bold}${green}Cleaning Temporary Files...${normal}"
 rm -rf /tmp/*
 apt autoclean -y
 apt autoremove -y
-
 rm -rf /var/backups/dpkg.diversions.*.gz
 rm -rf /var/backups/dpkg.stat*.*.gz
 #remove old log
