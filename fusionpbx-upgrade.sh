@@ -4,9 +4,15 @@
 # Copyright (c) shadikur.com
 # Script follows here:
 
+#All the variables
+bold=$(tput bold)
+normal=$(tput sgr0)
+green=$(tput setaf 2)
+now=$(date +%Y-%m-%d)
+
 random=$(dd if=/dev/urandom bs=1 count=20 2>/dev/null | base64 | sed 's/[=\+//]//g')
 
-echo "Upgrading PHP Version \n"
+echo "${bold}${green}Upgrading PHP Version ${normal}\n"
 
 #remove php5
 apt remove -y php5 php5-cli php5-fpm php5-pgsql php5-sqlite php5-odbc php5-curl php5-imap php5-gd
@@ -37,24 +43,24 @@ cp /etc/nginx/sites-available/fusionpbx /etc/nginx/sites-enabled/
 
 #restart nginx
 service nginx restart
-echo "PHP version has been upgraded \n" 
+echo "${bold}${green}PHP version has been upgraded ${normal}\n" 
 
-echo "Backing up old FusionPBX. \n"
+echo "${bold}${green}Backing up old FusionPBX. ${normal}\n"
 rm -rf /var/www/fusionpbx-old
 mv /var/www/fusionpbx /var/www/fusionpbx-old
 mkdir -p /var/cache/fusionpbx
 
-echo "installing dependencies"
+echo "${bold}${green}Installing dependencies ... ${normal}\n"
 apt-get install -y vim git dbus haveged ssl-cert qrencode
 apt-get install -y ghostscript libtiff5-dev libtiff-tools at
 
-echo "Getting latest FusionPBX. \n"
+echo "${bold}${green}Getting latest FusionPBX... ${normal}\n"
 chown -R www-data:www-data /var/cache/fusionpbx
 cd /var/www && git clone https://github.com/fusionpbx/fusionpbx.git
-echo "Changing permission settings. \n"
+echo "${bold}${green}Changing permission settings...${normal} \n"
 chown -R www-data:www-data /var/www/fusionpbx
 
-echo "Upgrading Switch ... \n"
+echo "${bold}${green}Upgrading Switch ...${normal} \n"
 rm -rf /etc/apt/sources.list.d/freeswitch.list
 apt-get update && apt-get install -y curl memcached haveged
 #curl https://files.freeswitch.org/repo/deb/debian/freeswitch_archive_g0.pub | apt-key add -
@@ -88,7 +94,7 @@ mv /usr/share/freeswitch/sounds/temp/* /usr/share/freeswitch/sounds/music/defaul
 rm -R /usr/share/freeswitch/sounds/temp
 
 
-echo "Setting permission for Freeswitch \n"
+echo "${bold}${green}Setting permission for Freeswitch ${normal} \n"
 rm -rf /etc/freeswitch.orig
 mv /etc/freeswitch /etc/freeswitch.orig
 mkdir -p /etc/freeswitch
@@ -109,13 +115,16 @@ sed -i /etc/freeswitch/autoload_configs/xml_cdr.conf.xml -e s:"{v_project_path}:
 sed -i /etc/freeswitch/autoload_configs/xml_cdr.conf.xml -e s:"{v_user}:$xml_cdr_username:"
 sed -i /etc/freeswitch/autoload_configs/xml_cdr.conf.xml -e s:"{v_pass}:$xml_cdr_password:"
 
-echo "Switch process complete \n\n"
+echo "${bold}${green}Switch process complete ${normal}\n\n"
 
-echo "Restarting Freeswitch \n"
+echo "${bold}${green}Restarting Freeswitch ${normal}\n"
 /bin/systemctl daemon-reload
 /bin/systemctl restart freeswitch
+echo "Refreshing Mod Sofia \n"
+fs_cli -x 'reload mod_sofia'
 
-echo "Running advance upgrade process. \n"
+
+echo "${bold}${green}Running advance upgrade process. ${normal}\n"
 cd /var/www/fusionpbx
 php /var/www/fusionpbx/core/upgrade/upgrade.php
-echo "Upgradation complete. \n \n \n"
+echo "${bold}${green}Upgradation complete. ${normal}\n \n \n"
