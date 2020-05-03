@@ -55,7 +55,7 @@ echo "Changing permission settings. \n"
 chown -R www-data:www-data /var/www/fusionpbx
 
 echo "Upgrading Switch ... \n"
-#!/bin/sh
+rm -rf /etc/apt/sources.list.d/freeswitch.list
 apt-get update && apt-get install -y curl memcached haveged
 curl https://files.freeswitch.org/repo/deb/debian/freeswitch_archive_g0.pub | apt-key add -
 #echo "deb http://files.freeswitch.org/repo/deb/freeswitch-1.6/ jessie main" > /etc/apt/sources.list.d/freeswitch.list
