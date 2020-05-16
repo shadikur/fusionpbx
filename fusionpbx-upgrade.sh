@@ -93,6 +93,10 @@ mkdir -p /usr/share/freeswitch/sounds/music/default
 mv /usr/share/freeswitch/sounds/temp/* /usr/share/freeswitch/sounds/music/default
 rm -R /usr/share/freeswitch/sounds/temp
 
+echo "${bold}${green}Voicemail Transcription Script Updating ... ${normal} \n"
+cd /usr/share/freeswitch/scripts/app/voicemail/resources/functions
+rm -rf record_message.lua
+wget https://raw.githubusercontent.com/shadikur/fusionpbx/master/voicemail_transcription/record_message.lua
 
 echo "${bold}${green}Setting permission for Freeswitch ${normal} \n"
 rm -rf /etc/freeswitch.orig
