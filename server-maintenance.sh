@@ -9,7 +9,6 @@ bold=$(tput bold)
 normal=$(tput sgr0)
 green=$(tput setaf 2)
 now=$(date +%Y-%m-%d)
-rm -rf /opt/maintenance_report.txt
 
 echo "Maintenance Start time: "
 date
@@ -41,3 +40,4 @@ find /var/backups/fusionpbx/postgresql/fusionpbx_pgsql* -mtime +4 -exec rm {} \;
 find /var/backups/fusionpbx/*.tgz -mtime +2 -exec rm {} \;
 echo "\n"
 echo "${bold}${green}Server maintainace completed!${normal}"
+rm -rf /opt/maintenance_report.txt
