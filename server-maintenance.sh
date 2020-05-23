@@ -32,7 +32,7 @@ touch /var/log/freeswitch/freeswitch.log
 chmod g+w /var/log/freeswitch/freeswitch.log
 chown www-data:www-data /var/log/freeswitch/freeswitch.log
 echo "${bold}${green}Restarting Freeswitch...${normal}"
-service freeswitch restart
+systemctl restart freeswitch
 echo "${bold}${green}FusionPBX old backups deleted...${normal}"
 #delete postgres backups
 find /var/backups/fusionpbx/postgresql/fusionpbx_pgsql* -mtime +4 -exec rm {} \;
