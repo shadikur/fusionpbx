@@ -65,6 +65,7 @@ apt-get install -y ghostscript libtiff5-dev libtiff-tools at
 echo "${bold}${green}Getting latest FusionPBX... ${normal}\n"
 chown -R www-data:www-data /var/cache/fusionpbx
 cd /var/www && git clone https://github.com/fusionpbx/fusionpbx.git
+git clone https://github.com/fusionpbx/fusionpbx-app-edit.git /var/www/fusionpbx/edit
 echo "${bold}${green}Changing permission settings...${normal} \n"
 chown -R www-data:www-data /var/www/fusionpbx
 
