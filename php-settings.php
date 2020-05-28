@@ -5,7 +5,7 @@
 # Script follows here:
 
 #All the variables
-${php_ini_file} = '/etc/php/7.3/fpm/php.ini'
+php_ini_file = $(/etc/php/7.3/fpm/php.ini)
 
 #Update PHP Settings
 sed 's#post_max_size = .*#post_max_size = 80M#g' -i ${php_ini_file}
