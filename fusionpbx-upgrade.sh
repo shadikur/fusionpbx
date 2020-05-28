@@ -9,7 +9,6 @@ bold=$(tput bold)
 normal=$(tput sgr0)
 green=$(tput setaf 2)
 now=$(date +%Y-%m-%d)
-$php_ini_file = '/etc/php/7.3/fpm/php.ini'
 
 
 random=$(dd if=/dev/urandom bs=1 count=20 2>/dev/null | base64 | sed 's/[=\+//]//g')
@@ -38,10 +37,10 @@ apt-get update
 apt-get install -y php7.3 php7.3-cli php7.3-fpm php7.3-pgsql php7.3-sqlite3 php7.3-odbc php7.3-curl php7.3-imap php7.3-xml php7.3-gd php7.3-ldap php7.3-common
 
 #Update PHP Settings
-sed 's#post_max_size = .*#post_max_size = 80M#g' -i $php_ini_file
-sed 's#upload_max_filesize = .*#upload_max_filesize = 80M#g' -i $php_ini_file
-sed 's#;max_input_vars = .*#max_input_vars = 8000#g' -i $php_ini_file
-sed 's#; max_input_vars = .*#max_input_vars = 8000#g' -i $php_ini_file
+sed 's#post_max_size = .*#post_max_size = 80M#g' -i /etc/php/7.3/fpm/php.ini
+sed 's#upload_max_filesize = .*#upload_max_filesize = 80M#g' -i /etc/php/7.3/fpm/php.ini
+sed 's#;max_input_vars = .*#max_input_vars = 8000#g' -i /etc/php/7.3/fpm/php.ini
+sed 's#; max_input_vars = .*#max_input_vars = 8000#g' -i /etc/php/7.3/fpm/php.ini
 
 #update the unix socket name
 sed -i /etc/nginx/sites-available/fusionpbx -e 's#unix:.*;#unix:/var/run/php/php7.3-fpm.sock;#g'
