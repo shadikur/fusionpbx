@@ -19,7 +19,7 @@ rm -rf email.txt
 #Process Alert
 ccvalue=$(cat ccput.txt)
 
-if [ ${ccvalue} -eq ${alert_limit} ] && [ ${ccvalue} -gt ${alert_limit} ]
+if [ ${ccvalue} -eq ${alert_limit} ] || [ ${ccvalue} -gt ${alert_limit} ]
 	then
 	printf "Nearly reaching (${ccvalue}) to max concurrent(${max_limit}) call limit\n"
 	echo "Nearly reaching (${ccvalue}) to max concurrent(${max_limit}) call limit\n" >> email.txt
