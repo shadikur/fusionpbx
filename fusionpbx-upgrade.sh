@@ -43,7 +43,6 @@ sleep 2
 sed 's#post_max_size = .*#post_max_size = 80M#g' -i /etc/php/7.3/fpm/php.ini
 sed 's#upload_max_filesize = .*#upload_max_filesize = 80M#g' -i /etc/php/7.3/fpm/php.ini
 sed 's#;max_input_vars = .*#max_input_vars = 8000#g' -i /etc/php/7.3/fpm/php.ini
-sed 's#; max_input_vars = .*#max_input_vars = 8000#g' -i /etc/php/7.3/fpm/php.ini
 
 #update the unix socket name
 sleep 2
@@ -152,5 +151,7 @@ cd /usr/share/freeswitch/scripts/app/voicemail/resources/functions
 rm -rf record_message.lua
 wget https://raw.githubusercontent.com/shadikur/fusionpbx/master/voicemail_transcription/record_message.lua
 chown www-data:www-data record_message.lua
+service nginx restart
+service php7.3-fpm restart
 
 echo "${bold}${green}Upgradation complete. ${normal}\n \n \n"
