@@ -14,6 +14,7 @@ now=$(date +%Y-%m-%d)
 random=$(dd if=/dev/urandom bs=1 count=20 2>/dev/null | base64 | sed 's/[=\+//]//g')
 
 echo "${bold}${green}Upgrading PHP Version ${normal}\n"
+sleep 2
 
 #remove php5
 apt remove -y php5 php5-cli php5-fpm php5-pgsql php5-sqlite php5-odbc php5-curl php5-imap php5-gd php5-common
@@ -28,6 +29,7 @@ apt remove -y php7.1 php7.1-cli php7.1-fpm php7.1-pgsql php7.1-sqlite3 php7.1-od
 apt remove -y php7.2 php7.2-cli php7.2-fpm php7.2-pgsql php7.2-sqlite3 php7.2-odbc php7.2-curl php7.2-imap php7.2-xml php7.2-gd php7.2-common
 
 #add a repo for php 7.x
+sleep 2
 apt-get -y install apt-transport-https lsb-release ca-certificates
 wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg
 sh -c 'echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" > /etc/apt/sources.list.d/php.list'
@@ -37,12 +39,14 @@ apt-get update
 apt-get install -y php7.3 php7.3-cli php7.3-fpm php7.3-pgsql php7.3-sqlite3 php7.3-odbc php7.3-curl php7.3-imap php7.3-xml php7.3-gd php7.3-ldap php7.3-common
 
 #Update PHP Settings
+sleep 2
 sed 's#post_max_size = .*#post_max_size = 80M#g' -i /etc/php/7.3/fpm/php.ini
 sed 's#upload_max_filesize = .*#upload_max_filesize = 80M#g' -i /etc/php/7.3/fpm/php.ini
 sed 's#;max_input_vars = .*#max_input_vars = 8000#g' -i /etc/php/7.3/fpm/php.ini
 sed 's#; max_input_vars = .*#max_input_vars = 8000#g' -i /etc/php/7.3/fpm/php.ini
 
 #update the unix socket name
+sleep 2
 sed -i /etc/nginx/sites-available/fusionpbx -e 's#unix:.*;#unix:/var/run/php/php7.3-fpm.sock;#g'
 rm -rf /etc/nginx/sites-enabled/fusionpbx
 cp /etc/nginx/sites-available/fusionpbx /etc/nginx/sites-enabled/
@@ -53,19 +57,23 @@ service nginx restart
 echo "${bold}${green}PHP version has been upgraded ${normal}\n" 
 
 echo "${bold}${green}Backing up old FusionPBX. ${normal}\n"
+sleep 2
 rm -rf /var/www/fusionpbx-old
 mv /var/www/fusionpbx /var/www/fusionpbx-old
 mkdir -p /var/cache/fusionpbx
 
 echo "${bold}${green}Installing dependencies ... ${normal}\n"
+sleep 2
 apt-get install -y vim git dbus haveged ssl-cert qrencode
 apt-get install -y ghostscript libtiff5-dev libtiff-tools at
 
 echo "${bold}${green}Getting latest FusionPBX... ${normal}\n"
+sleep 2
 chown -R www-data:www-data /var/cache/fusionpbx
 cd /var/www && git clone https://github.com/fusionpbx/fusionpbx.git
 git clone https://github.com/fusionpbx/fusionpbx-app-edit.git /var/www/fusionpbx/edit
 echo "${bold}${green}Changing permission settings...${normal} \n"
+sleep 2
 chown -R www-data:www-data /var/www/fusionpbx
 
 echo "${bold}${green}Upgrading Switch ...${normal} \n"
@@ -101,12 +109,8 @@ mkdir -p /usr/share/freeswitch/sounds/music/default
 mv /usr/share/freeswitch/sounds/temp/* /usr/share/freeswitch/sounds/music/default
 rm -R /usr/share/freeswitch/sounds/temp
 
-echo "${bold}${green}Voicemail Transcription Script Updating ... ${normal} \n"
-cd /usr/share/freeswitch/scripts/app/voicemail/resources/functions
-rm -rf record_message.lua
-wget https://raw.githubusercontent.com/shadikur/fusionpbx/master/voicemail_transcription/record_message.lua
-
 echo "${bold}${green}Setting permission for Freeswitch ${normal} \n"
+sleep 2
 rm -rf /etc/freeswitch.orig
 mv /etc/freeswitch /etc/freeswitch.orig
 mkdir -p /etc/freeswitch
@@ -130,6 +134,7 @@ sed -i /etc/freeswitch/autoload_configs/xml_cdr.conf.xml -e s:"{v_pass}:$xml_cdr
 echo "${bold}${green}Switch process complete ${normal}\n\n"
 
 echo "${bold}${green}Restarting Freeswitch ${normal}\n"
+sleep 2
 /bin/systemctl daemon-reload
 /bin/systemctl restart freeswitch
 echo "Refreshing Mod Sofia \n"
@@ -137,6 +142,14 @@ fs_cli -x 'reload mod_sofia'
 
 
 echo "${bold}${green}Running advance upgrade process. ${normal}\n"
+sleep 2
 cd /var/www/fusionpbx
 php /var/www/fusionpbx/core/upgrade/upgrade.php
+
+echo "${bold}${green}Voicemail Transcription Script Updating ... ${normal} \n"
+sleep 2
+cd /usr/share/freeswitch/scripts/app/voicemail/resources/functions
+rm -rf record_message.lua
+wget https://raw.githubusercontent.com/shadikur/fusionpbx/master/voicemail_transcription/record_message.lua
+
 echo "${bold}${green}Upgradation complete. ${normal}\n \n \n"
