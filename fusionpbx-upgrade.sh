@@ -151,5 +151,6 @@ sleep 2
 cd /usr/share/freeswitch/scripts/app/voicemail/resources/functions
 rm -rf record_message.lua
 wget https://raw.githubusercontent.com/shadikur/fusionpbx/master/voicemail_transcription/record_message.lua
+chown www-data:www-data record_message.lua
 
 echo "${bold}${green}Upgradation complete. ${normal}\n \n \n"
