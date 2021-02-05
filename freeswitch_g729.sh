@@ -15,3 +15,6 @@ wget -P /usr/lib/freeswitch/mod http://develop.shadikur.com/fs/mod_bcg729.so
 /usr/bin/fs_cli -x "load mod_bcg729.so"
 
 echo "Codec G729 has been installed."
+
+echo "Show overview of the codecs."
+ fs_cli -x "show codec"
