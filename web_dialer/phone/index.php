@@ -42,7 +42,7 @@ echo "<html lang='en'>\n";
 echo "<head>\n";
 echo "    <meta charset='utf-8' />\n";
 echo "    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'>\n";
-echo "    <title>ctxSip</title>\n";
+echo "    <title>Webdialer</title>\n";
 echo "    <link rel='icon' type='image/gif' href='img/favicon.ico' />\n";
 echo "    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css'>\n";
 echo "    <link rel='stylesheet' href='//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css'>\n";
