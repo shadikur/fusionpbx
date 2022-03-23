@@ -7,11 +7,11 @@ system_branch=master                        # master, stable
 
 # FreeSWITCH Settings
 switch_branch=stable                        # master, stable
-switch_source=true                          # true (source compile) or false (binary package)
-switch_package=false                        # true (binary package) or false (source compile)
-switch_version=1.10.3                       # which source code to download, only for source
+switch_source=false                          # true (source compile) or false (binary package)
+switch_package=true                        # true (binary package) or false (source compile)
+switch_version=1.10.6                       # which source code to download, only for source
 switch_tls=true                             # true or false
-switch_token=                               # Get the auth token from https://signalwire.com
+switch_token=   # Get the auth token from https://signalwire.com
                                             # Signup or Login -> Profile -> Personal Auth Token
 # Sofia-Sip Settings
 sofia_version=1.13.6                        # release-version for sofia-sip to use
